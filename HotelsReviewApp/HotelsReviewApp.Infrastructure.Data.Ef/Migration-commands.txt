@@ -1,0 +1,3 @@
+﻿EntityFrameworkCore\Add-Migration -Project HotelsReviewApp.Infrastructure.Data.Ef -StartUpProject HotelsReviewApp.Api -Context HotelsReviewDbContext -o Migrations -Name Initial
+
+EntityFrameworkCore\Update-Database -Project HotelsReviewApp.Infrastructure.Data.Ef -StartUpProject HotelsReviewApp.Api -Context HotelsReviewDbContext
