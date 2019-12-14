@@ -1,7 +1,9 @@
 using System;
 using Autofac;
+using HotelsReviewApp.Domain.Service;
 using HotelsReviewApp.Infrastructure.Autofac;
 using HotelsReviewApp.Infrastructure.Data.Ef;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +30,10 @@ namespace HotelsReviewApp.Api
 
             services.AddCors(); //Cross-Origin Resource Sharing sa kojih domena mogu requesti na moj api
             services.AddDbContext<HotelsReviewDbContext>();
+
+            services.AddMediatR(
+                typeof(CommandResult<>).Assembly
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -4,14 +4,16 @@ using HotelsReviewApp.Infrastructure.Data.Ef;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HotelsReviewApp.Infrastructure.Data.Ef.Migrations
 {
     [DbContext(typeof(HotelsReviewDbContext))]
-    partial class HotelsReviewDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191214202530_FavoriteHotelAdded")]
+    partial class FavoriteHotelAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,21 +97,6 @@ namespace HotelsReviewApp.Infrastructure.Data.Ef.Migrations
                     b.HasIndex("HotelId");
 
                     b.ToTable("UserFavoriteHotel");
-                });
-
-            modelBuilder.Entity("HotelsReviewApp.Domain.Model.UserReviewReaction", b =>
-                {
-                    b.Property<int>("UserId");
-
-                    b.Property<int>("ReviewId");
-
-                    b.Property<int>("ReactionType");
-
-                    b.HasKey("UserId", "ReviewId");
-
-                    b.HasIndex("ReviewId");
-
-                    b.ToTable("UserReviewReaction");
                 });
 
             modelBuilder.Entity("HotelsReviewApp.Domain.Model.Hotel", b =>
@@ -201,19 +188,6 @@ namespace HotelsReviewApp.Infrastructure.Data.Ef.Migrations
 
                     b.HasOne("HotelsReviewApp.Domain.Model.User", "User")
                         .WithMany("FavoriteHotels")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("HotelsReviewApp.Domain.Model.UserReviewReaction", b =>
-                {
-                    b.HasOne("HotelsReviewApp.Domain.Model.Review", "Review")
-                        .WithMany("UserReactions")
-                        .HasForeignKey("ReviewId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("HotelsReviewApp.Domain.Model.User", "User")
-                        .WithMany("ReviewReactions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

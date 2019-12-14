@@ -4,14 +4,16 @@ using HotelsReviewApp.Infrastructure.Data.Ef;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HotelsReviewApp.Infrastructure.Data.Ef.Migrations
 {
     [DbContext(typeof(HotelsReviewDbContext))]
-    partial class HotelsReviewDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191214200457_AddingHotelsAndReviews")]
+    partial class AddingHotelsAndReviews
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,7 +33,11 @@ namespace HotelsReviewApp.Infrastructure.Data.Ef.Migrations
                     b.Property<string>("Name")
                         .HasMaxLength(255);
 
+                    b.Property<int?>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Hotel");
                 });
@@ -84,36 +90,12 @@ namespace HotelsReviewApp.Infrastructure.Data.Ef.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("HotelsReviewApp.Domain.Model.UserFavoriteHotel", b =>
-                {
-                    b.Property<int>("UserId");
-
-                    b.Property<int>("HotelId");
-
-                    b.HasKey("UserId", "HotelId");
-
-                    b.HasIndex("HotelId");
-
-                    b.ToTable("UserFavoriteHotel");
-                });
-
-            modelBuilder.Entity("HotelsReviewApp.Domain.Model.UserReviewReaction", b =>
-                {
-                    b.Property<int>("UserId");
-
-                    b.Property<int>("ReviewId");
-
-                    b.Property<int>("ReactionType");
-
-                    b.HasKey("UserId", "ReviewId");
-
-                    b.HasIndex("ReviewId");
-
-                    b.ToTable("UserReviewReaction");
-                });
-
             modelBuilder.Entity("HotelsReviewApp.Domain.Model.Hotel", b =>
                 {
+                    b.HasOne("HotelsReviewApp.Domain.Model.User")
+                        .WithMany("FavouriteHotels")
+                        .HasForeignKey("UserId");
+
                     b.OwnsOne("HotelsReviewApp.Domain.Model.Address", "Address", b1 =>
                         {
                             b1.Property<int>("HotelId")
@@ -190,32 +172,6 @@ namespace HotelsReviewApp.Infrastructure.Data.Ef.Migrations
                     b.HasOne("HotelsReviewApp.Domain.Model.Hotel", "ReviewedHotel")
                         .WithMany("Reviews")
                         .HasForeignKey("ReviewedHotelId");
-                });
-
-            modelBuilder.Entity("HotelsReviewApp.Domain.Model.UserFavoriteHotel", b =>
-                {
-                    b.HasOne("HotelsReviewApp.Domain.Model.Hotel", "Hotel")
-                        .WithMany()
-                        .HasForeignKey("HotelId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("HotelsReviewApp.Domain.Model.User", "User")
-                        .WithMany("FavoriteHotels")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("HotelsReviewApp.Domain.Model.UserReviewReaction", b =>
-                {
-                    b.HasOne("HotelsReviewApp.Domain.Model.Review", "Review")
-                        .WithMany("UserReactions")
-                        .HasForeignKey("ReviewId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("HotelsReviewApp.Domain.Model.User", "User")
-                        .WithMany("ReviewReactions")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

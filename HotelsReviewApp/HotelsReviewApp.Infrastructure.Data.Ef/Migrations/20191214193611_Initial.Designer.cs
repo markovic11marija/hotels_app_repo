@@ -4,14 +4,16 @@ using HotelsReviewApp.Infrastructure.Data.Ef;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HotelsReviewApp.Infrastructure.Data.Ef.Migrations
 {
     [DbContext(typeof(HotelsReviewDbContext))]
-    partial class HotelsReviewDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191214193611_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,71 +47,13 @@ namespace HotelsReviewApp.Infrastructure.Data.Ef.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(500);
 
-                    b.Property<string>("HotelRating")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.Property<int?>("ReviewAuthorId");
-
                     b.Property<int?>("ReviewedHotelId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ReviewAuthorId");
-
                     b.HasIndex("ReviewedHotelId");
 
                     b.ToTable("Review");
-                });
-
-            modelBuilder.Entity("HotelsReviewApp.Domain.Model.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("DisplayName")
-                        .HasMaxLength(255);
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(255);
-
-                    b.Property<bool>("IsAdministrator");
-
-                    b.Property<string>("Password")
-                        .HasMaxLength(255);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("User");
-                });
-
-            modelBuilder.Entity("HotelsReviewApp.Domain.Model.UserFavoriteHotel", b =>
-                {
-                    b.Property<int>("UserId");
-
-                    b.Property<int>("HotelId");
-
-                    b.HasKey("UserId", "HotelId");
-
-                    b.HasIndex("HotelId");
-
-                    b.ToTable("UserFavoriteHotel");
-                });
-
-            modelBuilder.Entity("HotelsReviewApp.Domain.Model.UserReviewReaction", b =>
-                {
-                    b.Property<int>("UserId");
-
-                    b.Property<int>("ReviewId");
-
-                    b.Property<int>("ReactionType");
-
-                    b.HasKey("UserId", "ReviewId");
-
-                    b.HasIndex("ReviewId");
-
-                    b.ToTable("UserReviewReaction");
                 });
 
             modelBuilder.Entity("HotelsReviewApp.Domain.Model.Hotel", b =>
@@ -183,39 +127,9 @@ namespace HotelsReviewApp.Infrastructure.Data.Ef.Migrations
 
             modelBuilder.Entity("HotelsReviewApp.Domain.Model.Review", b =>
                 {
-                    b.HasOne("HotelsReviewApp.Domain.Model.User", "ReviewAuthor")
-                        .WithMany("Reviews")
-                        .HasForeignKey("ReviewAuthorId");
-
                     b.HasOne("HotelsReviewApp.Domain.Model.Hotel", "ReviewedHotel")
                         .WithMany("Reviews")
                         .HasForeignKey("ReviewedHotelId");
-                });
-
-            modelBuilder.Entity("HotelsReviewApp.Domain.Model.UserFavoriteHotel", b =>
-                {
-                    b.HasOne("HotelsReviewApp.Domain.Model.Hotel", "Hotel")
-                        .WithMany()
-                        .HasForeignKey("HotelId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("HotelsReviewApp.Domain.Model.User", "User")
-                        .WithMany("FavoriteHotels")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("HotelsReviewApp.Domain.Model.UserReviewReaction", b =>
-                {
-                    b.HasOne("HotelsReviewApp.Domain.Model.Review", "Review")
-                        .WithMany("UserReactions")
-                        .HasForeignKey("ReviewId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("HotelsReviewApp.Domain.Model.User", "User")
-                        .WithMany("ReviewReactions")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
