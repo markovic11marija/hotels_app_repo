@@ -7,5 +7,10 @@
         public int UserId { get; set; }
         public User User { get; set; }
         public ReactionType ReactionType { get; set; }
+
+        public int GetPointsForOverallRating()
+        {
+            return ReactionType == ReactionType.Like ? 1 : -1;
+        }
     }
 }
