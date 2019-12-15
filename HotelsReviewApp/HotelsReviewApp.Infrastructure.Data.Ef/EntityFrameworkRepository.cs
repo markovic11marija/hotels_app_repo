@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using HotelsReviewApp.Domain.Model;
 using Microsoft.EntityFrameworkCore;
@@ -21,11 +22,6 @@ namespace HotelsReviewApp.Infrastructure.Data.Ef
         public IQueryable<T> QueryAll()
         {
             return DbSet;
-        }
-
-        public IQueryable<T> QueryAllNoTracking()
-        {
-            return DbSet.AsNoTracking();
         }
 
         public T FindById(int id)
@@ -68,6 +64,17 @@ namespace HotelsReviewApp.Infrastructure.Data.Ef
         public void DeleteRange(IEnumerable<T> entities)
         {
             DbSet.RemoveRange(entities);
+        }
+
+        public IQueryable<T> QueryAllIncluding(params Expression<Func<T, object>>[] paths)
+        {
+            if (paths == null)
+            {
+                throw new ArgumentNullException(nameof(paths));
+            }
+
+            return paths.Aggregate<Expression<Func<T, object>>, IQueryable<T>>(DbSet,
+                (current, includeProperty) => current.Include(includeProperty));
         }
     }
 }

@@ -8,7 +8,7 @@ namespace HotelsReviewApp.Infrastructure.Data.Ef.Configuration
     {
         public void Configure(EntityTypeBuilder<UserReviewReaction> builder)
         {
-            builder.HasKey(ur => new { ur.UserId, ur.ReviewId });
+            builder.HasKey(ur => new { ur.UserId, ur.ReviewId, ur.ReactionType });
             builder.HasOne(ur => ur.User)
                 .WithMany(u => u.ReviewReactions)
                 .HasForeignKey(r => r.UserId);

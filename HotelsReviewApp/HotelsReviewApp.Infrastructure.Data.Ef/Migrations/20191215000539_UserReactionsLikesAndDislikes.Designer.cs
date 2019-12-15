@@ -4,14 +4,16 @@ using HotelsReviewApp.Infrastructure.Data.Ef;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HotelsReviewApp.Infrastructure.Data.Ef.Migrations
 {
     [DbContext(typeof(HotelsReviewDbContext))]
-    partial class HotelsReviewDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191215000539_UserReactionsLikesAndDislikes")]
+    partial class UserReactionsLikesAndDislikes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,9 +105,11 @@ namespace HotelsReviewApp.Infrastructure.Data.Ef.Migrations
 
                     b.Property<int>("ReviewId");
 
-                    b.Property<int>("ReactionType");
+                    b.Property<bool>("Disliked");
 
-                    b.HasKey("UserId", "ReviewId", "ReactionType");
+                    b.Property<bool>("Liked");
+
+                    b.HasKey("UserId", "ReviewId");
 
                     b.HasIndex("ReviewId");
 
