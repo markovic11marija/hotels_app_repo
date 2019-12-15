@@ -9,7 +9,7 @@ namespace HotelsReviewApp.Domain.Model
         public string Password { get; set; }
         public bool IsAdministrator { get; set; }
         public IEnumerable<Review> Reviews { get; set; }
-        public IEnumerable<UserFavoriteHotel> FavoriteHotels { get; set; } = new List<UserFavoriteHotel>();
+        public IList<UserFavoriteHotel> FavoriteHotels { get; set; } = new List<UserFavoriteHotel>();
         public IList<UserReviewReaction> ReviewReactions { get; set; } = new List<UserReviewReaction>();
 
         public User()
@@ -32,6 +32,16 @@ namespace HotelsReviewApp.Domain.Model
         public void RemoveReaction(UserReviewReaction reaction)
         {
             ReviewReactions.Remove(reaction);
+        }
+
+        public void AddHotelToFavorites(UserFavoriteHotel favoriteHotel)
+        {
+            FavoriteHotels.Add(favoriteHotel);
+        }
+
+        public void RemoveHotelFromFavorites(UserFavoriteHotel favoriteHotel)
+        {
+            FavoriteHotels.Remove(favoriteHotel);
         }
     }
 }

@@ -2,7 +2,6 @@
 using HotelsReviewApp.Domain.Model;
 using HotelsReviewApp.Domain.Model.Core;
 using HotelsReviewApp.Domain.Service;
-using HotelsReviewApp.Domain.Service.Hotels.EditHotelDetails;
 using HotelsReviewApp.Domain.Service.Reactions.ReactToHotelReview;
 using HotelsReviewApp.Domain.Service.Reactions.RemoveReactionToHotelReview;
 using MediatR;

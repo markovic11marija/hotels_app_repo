@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HotelsReviewApp.Domain.Service.Reviews.GetUsersWithReviewReactions
 {
-    public class GetUsersWithReviewReactionsQueryHandler:IRequestHandler<GetUsersWithReviewReactionsQuery, IEnumerable<UserWithReaction>>
+    public class GetUsersWithReviewReactionsQueryHandler:IRequestHandler<GetUsersWithReviewReactionsQuery, IEnumerable<UserWithReactionModel>>
     {
         private readonly IRepository<Review> _reviewRepository;
 
@@ -19,14 +19,14 @@ namespace HotelsReviewApp.Domain.Service.Reviews.GetUsersWithReviewReactions
             _reviewRepository = reviewRepository;
         }
 
-        public async Task<IEnumerable<UserWithReaction>> Handle(GetUsersWithReviewReactionsQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<UserWithReactionModel>> Handle(GetUsersWithReviewReactionsQuery request, CancellationToken cancellationToken)
         {
             var result = _reviewRepository.QueryAll().Include(u => u.UserReactions)
                 .ThenInclude(r => r.User)
                 .FirstOrDefault(o => o.Id == request.ReviewId)?
                 .UserReactions?
                 .Where(ur => ur.ReactionType == request.ReactionType)
-                .Select(re => new UserWithReaction(re.User.Email, re.User.DisplayName))
+                .Select(re => new UserWithReactionModel(re.User.Email, re.User.DisplayName))
                 .ToList();
             return await Task.FromResult(result);
         }

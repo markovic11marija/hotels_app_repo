@@ -47,13 +47,13 @@ namespace HotelsReviewApp.Api.Controllers
         }
 
         [HttpGet("{reviewId}/liked-by")]
-        public async Task<ActionResult<IEnumerable<UserWithReaction>>> ReviewLikedBy(int reviewId)
+        public async Task<ActionResult<IEnumerable<UserWithReactionModel>>> ReviewLikedBy(int reviewId)
         {
             return Ok(await _mediator.Send(new GetUsersWithReviewReactionsQuery(reviewId, ReactionType.Like)));
         }
 
         [HttpGet("{reviewId}/disliked-by")]
-        public async Task<ActionResult<IEnumerable<UserWithReaction>>> ReviewDislikedBy(int reviewId)
+        public async Task<ActionResult<IEnumerable<UserWithReactionModel>>> ReviewDislikedBy(int reviewId)
         {
             return Ok(await _mediator.Send(new GetUsersWithReviewReactionsQuery(reviewId, ReactionType.Dislike)));
         }

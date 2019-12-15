@@ -5,7 +5,7 @@ using MediatR;
 
 namespace HotelsReviewApp.Domain.Service.Reviews.GetUsersWithReviewReactions
 {
-   public class GetUsersWithReviewReactionsQuery: IRequest<IEnumerable<UserWithReaction>>
+   public class GetUsersWithReviewReactionsQuery: IRequest<IEnumerable<UserWithReactionModel>>
     {
         public int ReviewId { get; }
         public ReactionType ReactionType { get;  }
