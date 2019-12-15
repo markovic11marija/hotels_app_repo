@@ -1,0 +1,9 @@
+Notes: 
+I've used Swagger so you can see Api documentation there, also can be used for testing. 
+I've used EntityFramework code first approach, and configured that migrations and seedings gets executed on running app.
+
+Things that I didn't have time to implement and would be nice: 
+I've would add oauth token authentification;
+Would hash passwords for users;
+Would add paging for large amount of data - and than use skip and take in EntityFramework
+I've added globalExceptionHandler, but some writting in file would also be nice 
