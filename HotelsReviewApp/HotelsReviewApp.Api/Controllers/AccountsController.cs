@@ -12,11 +12,11 @@ namespace HotelsReviewApp.Api.Controllers
     [Route("[controller]")]
     [Produces("application/json")]
     [ApiController]
-    public class AccountController : Controller
+    public class AccountsController : Controller
     {
         private readonly IMediator _mediator;
 
-        public AccountController(IMediator mediator)
+        public AccountsController(IMediator mediator)
         {
             _mediator = mediator;
         }
