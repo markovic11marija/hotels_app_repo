@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using HotelsReviewApp.Domain.Model;
 using HotelsReviewApp.Domain.Service.Favorites.GetUserFavorites.Dtos;
-using HotelsReviewApp.Domain.Service.Reviews.GetUsersWithReviewReactions.Dtos;
 using HotelsReviewApp.Infrastructure.Data;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

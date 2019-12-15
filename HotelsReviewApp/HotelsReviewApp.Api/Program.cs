@@ -32,6 +32,7 @@ namespace HotelsReviewApp.Api
                 {
                     var context = services.GetRequiredService<HotelsReviewDbContext>();
                     DbInitializer.Initialize(context);
+                    DbInitializer.Seed(context);
                 }
                 catch (Exception ex)
                 {

@@ -1,6 +1,4 @@
-﻿using System.Reflection.Metadata;
-
-namespace HotelsReviewApp.Domain.Model
+﻿namespace HotelsReviewApp.Domain.Model
 {
    public class Address
     {

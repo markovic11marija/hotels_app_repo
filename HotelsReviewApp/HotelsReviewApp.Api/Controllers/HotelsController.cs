@@ -5,6 +5,7 @@ using HotelsReviewApp.Domain.Model.Core;
 using HotelsReviewApp.Domain.Service;
 using HotelsReviewApp.Domain.Service.Hotels.AddHotel;
 using HotelsReviewApp.Domain.Service.Hotels.EditHotelDetails;
+using HotelsReviewApp.Domain.Service.Hotels.Filters;
 using HotelsReviewApp.Domain.Service.Hotels.GetHotels;
 using HotelsReviewApp.Domain.Service.Hotels.SearchHotel;
 using HotelsReviewApp.Domain.Service.Hotels.ViewHotelDetails;
@@ -44,8 +45,9 @@ namespace HotelsReviewApp.Api.Controllers
             return Ok(await _mediator.Send(new SearchHotelQuery(name, city)));
         }
 
-        [HttpPost]
-        public async Task<ActionResult<CommandResult<CommandEmptyResult>>> Add([FromBody]AddHotelCommand command)
+        [HttpPost("{userId}")]
+        [UserHasAdminRightsFilter]
+        public async Task<ActionResult<CommandResult<CommandEmptyResult>>> Add(int userId, [FromBody]AddHotelCommand command)
         {
             var result = await _mediator.Send(command);
 
@@ -55,8 +57,9 @@ namespace HotelsReviewApp.Api.Controllers
             return BadRequest(result.FailureReason);
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult<CommandResult<CommandEmptyResult>>> Edit(int id, [FromBody]EditHotelDetailsCommand command)
+        [HttpPut("{userId}/edit/{id}")]
+        [UserHasAdminRightsFilter]
+        public async Task<ActionResult<CommandResult<CommandEmptyResult>>> Edit(int userId, int id, [FromBody]EditHotelDetailsCommand command)
         {
             var request = command;
             request.HotelId = id;
