@@ -5,6 +5,8 @@ using HotelsReviewApp.Domain.Model.Core;
 using HotelsReviewApp.Domain.Service;
 using HotelsReviewApp.Domain.Service.Reviews.CreateHotelReview;
 using HotelsReviewApp.Domain.Service.Reviews.GetReviewsForHotel;
+using HotelsReviewApp.Domain.Service.Reviews.GetUsersWithReviewReactions;
+using HotelsReviewApp.Domain.Service.Reviews.GetUsersWithReviewReactions.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -42,6 +44,18 @@ namespace HotelsReviewApp.Api.Controllers
         public async Task<ActionResult<IEnumerable<Review>>> GetReviewsFor(int hotelId)
         {
             return Ok(await _mediator.Send(new GetReviewsForHotelQuery(hotelId)));
+        }
+
+        [HttpGet("{reviewId}/liked-by")]
+        public async Task<ActionResult<IEnumerable<UserWithReaction>>> ReviewLikedBy(int reviewId)
+        {
+            return Ok(await _mediator.Send(new GetUsersWithReviewReactionsQuery(reviewId, ReactionType.Like)));
+        }
+
+        [HttpGet("{reviewId}/disliked-by")]
+        public async Task<ActionResult<IEnumerable<UserWithReaction>>> ReviewDislikedBy(int reviewId)
+        {
+            return Ok(await _mediator.Send(new GetUsersWithReviewReactionsQuery(reviewId, ReactionType.Dislike)));
         }
     }
 }
